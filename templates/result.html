@@ -2,15 +2,34 @@
 <html>
 <head>
     <title>Prediction Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
-<body>
+<body class="result-bg">
 
-<h2>Prediction Result</h2>
+<div class="card">
+    <h1>Prediction Result</h1>
 
-<h3>{{ result }}</h3>
+    <div class="result-text">
+        🌸 {{ result }}
+    </div>
 
-<br>
-<a href="/">🔙 Go Back</a>
+    {% if confidence %}
+        <div class="confidence">
+            Confidence: {{ confidence }}%
+        </div>
+    {% endif %}
+
+    <h3>Input Features:</h3>
+    <ul>
+        <li>Sepal Length: {{ f1 }}</li>
+        <li>Sepal Width: {{ f2 }}</li>
+        <li>Petal Length: {{ f3 }}</li>
+        <li>Petal Width: {{ f4 }}</li>
+    </ul>
+
+    <br>
+    <a href="/">Go Back</a>
+</div>
 
 </body>
 </html>
