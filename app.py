@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect, url_for
 import joblib
 import os
 from sklearn.datasets import load_iris
@@ -10,26 +10,28 @@ model = joblib.load("model.pkl")
 iris = load_iris()
 target_names = iris.target_names
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/", methods=["GET"])
 def home():
-    result = None
+    return render_template("index.html")
 
-    if request.method == "POST":
-        try:
-            features = [
-                float(request.form["f1"]),
-                float(request.form["f2"]),
-                float(request.form["f3"]),
-                float(request.form["f4"])
-            ]
 
-            prediction = model.predict([features])[0]
-            result = target_names[prediction]
+@app.route("/predict", methods=["POST"])
+def predict():
+    try:
+        features = [
+            float(request.form["f1"]),
+            float(request.form["f2"]),
+            float(request.form["f3"]),
+            float(request.form["f4"])
+        ]
 
-        except Exception:
-            result = "Invalid input. Please enter numeric values."
+        prediction = model.predict([features])[0]
+        result = target_names[prediction]
 
-    return render_template("index.html", result=result)
+        return render_template("result.html", result=result)
+
+    except Exception:
+        return render_template("result.html", result="Invalid Input")
 
 
 if __name__ == "__main__":
