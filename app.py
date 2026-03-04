@@ -28,26 +28,36 @@ def predict():
         f3 = float(request.form["f3"])
         f4 = float(request.form["f4"])
 
+        # Range validation
+        if not (4 <= f1 <= 8):
+            raise ValueError("Sepal Length must be between 4 and 8")
+
+        if not (2 <= f2 <= 5):
+            raise ValueError("Sepal Width must be between 2 and 5")
+
+        if not (1 <= f3 <= 7):
+            raise ValueError("Petal Length must be between 1 and 7")
+
+        if not (0.1 <= f4 <= 3):
+            raise ValueError("Petal Width must be between 0.1 and 3")
+
         features = [f1, f2, f3, f4]
 
         prediction = model.predict([features])[0]
         probabilities = model.predict_proba([features])[0]
 
         result = target_names[prediction]
-        confidence = round(np.max(probabilities) * 100, 2)
+        confidence = round(max(probabilities) * 100, 2)
 
         return render_template(
             "result.html",
             result=result,
             confidence=confidence,
-            f1=f1,
-            f2=f2,
-            f3=f3,
-            f4=f4
+            f1=f1, f2=f2, f3=f3, f4=f4
         )
 
-    except Exception:
-        return render_template("result.html", result="Invalid Input")
+    except Exception as e:
+        return render_template("result.html", result=str(e))
 
 
 if __name__ == "__main__":
