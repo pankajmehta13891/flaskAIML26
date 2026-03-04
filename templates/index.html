@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Iris Predictor</title>
+    <link rel="stylesheet" href="/static/style.css">
+  </head>
+  <body>
+    <div class="card">
+      <h1>Iris Species Predictor</h1>
+      <form action="/predict" method="post">
+        <label>Sepal length (cm)<input name="sepal_length" required step="any" /></label>
+        <label>Sepal width (cm)<input name="sepal_width" required step="any" /></label>
+        <label>Petal length (cm)<input name="petal_length" required step="any" /></label>
+        <label>Petal width (cm)<input name="petal_width" required step="any" /></label>
+        <button type="submit">Predict</button>
+      </form>
+      <p class="hint">Try sample values: 5.1, 3.5, 1.4, 0.2</p>
+    </div>
+  </body>
+</html>
